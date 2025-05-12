@@ -15,32 +15,17 @@ spec:
       initContainers:
         - name: wait-for-service
           image: busybox
-          command:
-            - sh
-            - -c
-            - |
-              until nslookup myservice.default.svc.cluster.local; do echo waiting for myservice; sleep 2; done
+          command: ["sh", "-c", "until nslookup myservice.default.svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
         - name: perform-task
           image: busybox
-          command:
-            - sh
-            - -c
-            - |
-              echo "init container task completed" > /tasks/status.txt
+          command: ["sh", "-c", "echo 'init container task completed' > /tasks/status.txt"]
           volumeMounts:
             - name: tasks-volume
               mountPath: /tasks
       containers:
         - name: main-container
           image: busybox
-          command:
-            - sh
-            - -c
-            - |
-              while true; do
-                echo "Main container running"
-                sleep 10
-              done
+          command: ["sh", "-c", "while true; do echo 'Main container running'; sleep 10; done"]
           volumeMounts:
             - name: tasks-volume
               mountPath: /tasks
