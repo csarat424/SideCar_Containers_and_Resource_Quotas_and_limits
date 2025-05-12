@@ -25,7 +25,16 @@ spec:
               git clone https://github.com/csarat424/side-car-container.git /html
           volumeMounts:
             - name: nginxvol
-              mountPath: /html/
+              mountPath: /html
+      containers:
+        - name: main-container
+          image: nginx:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginxvol
+              mountPath: /usr/share/nginx/html
         - name: adapter-container
           image: busybox:1.28
           command:
@@ -38,16 +47,7 @@ spec:
               done
           volumeMounts:
             - name: nginxvol
-              mountPath: /html/
-      containers:
-        - name: main-container
-          image: nginx:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 80
-          volumeMounts:
-            - name: nginxvol
-              mountPath: /usr/share/nginx/html/
+              mountPath: /html
 ---
 apiVersion: v1
 kind: Service
