@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: init-container-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: init-container-app
